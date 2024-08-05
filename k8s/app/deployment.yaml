@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: host-info-flask-deployment
 spec:
-  replicas: 3 # Number of replicas
+  replicas: 3
   selector:
     matchLabels:
       app: host-info-flask
@@ -17,3 +17,10 @@ spec:
         image: ghcr.io/salehparsa/host-info-flask:v.b75ab62
         ports:
         - containerPort: 5000
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "256m"
+          limits:
+            memory: "512Mi"
+            cpu: "512m"

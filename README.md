@@ -45,14 +45,38 @@ Above comment sets up a network route to your Minikube cluster, allowing access 
 
 ## Deployment
 
-### Applying Kubernetes Manifests
+### Applying Kubernetes Manifests via Makefile
 
-To deploy the Flask application, apply the Kubernetes manifests using kubectl. Ensure you have the deployment, service, and Ingress manifests prepared.
+This repository contains a `Makefile` with some predefined target that helps you deploy the applications in your local cluster (Example : `Make deploy-all`
+). Following is the list of target:
+
+```sh
+deploy-all      # Deploy all
+deploy-prometheus   # Only Deploy Prometheus
+deploy-grafana  #Only Deploy Grafana
+deploy-app  #Only Deploy Application
+clean-prometheus    #Delete Prometheus
+clean-grafana   #Delete Grafana
+clean-app   #Delete Application
+clean-all   #Delete All
+```
+
+### Applying Kubernetes Manifests via kubectl
+
+To deploy the application, grafana or prometheus, apply the Kubernetes manifests using kubectl. You just need to navigate to the desired directory and run following:
 
 ```sh
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
 kubectl apply -f ingress.yaml
+```
+
+Please note that as a best practice, it's better that you run the appplication in dedicated `namespace`. Thus, in `app` directory there is a `namespace.yaml` file that helps you to create a `namespace` for the application. To deploy the application in this namespace you need to run following:
+
+```sh
+kubectl -n host-info-flask-namespace apply -f deployment.yaml
+kubectl -n host-info-flask-namespace apply -f service.yaml
+kubectl -n host-info-flask-namespace apply -f ingress.yaml
 ```
 
 ### Access the Application
@@ -81,7 +105,7 @@ kubectl get ingress
 ```
 * View Logs: For detailed debugging, check the logs of the Ingress controller:
 ```sh
-kubectl logs -l app=nginx-ingress-controller
+kubectl logs kube-controller-manager-minikube  --namespace kube-system
 ```
 
 ### Documentations
@@ -89,3 +113,5 @@ kubectl logs -l app=nginx-ingress-controller
 - [Minikube Documentation](https://minikube.sigs.k8s.io/docs/handbook/)
 - [Kubernetes Ingress Documentation](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 - [Kubectl Documentation](https://kubernetes.io/docs/reference/kubectl/)
+- [Grafana](https://grafana.com/docs/grafana/latest/)
+- [Prometheus](https://prometheus.io/docs/introduction/overview/)
