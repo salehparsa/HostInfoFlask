@@ -1,0 +1,18 @@
+# Ignore common Python files and directories
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Ignore development and testing files
+*.env
+*.log
+*.sqlite3
+*.db
+*.ini
+*.bak
+
+# Ignore version control files and directories
+.git/
+.gitignore
+.svn/

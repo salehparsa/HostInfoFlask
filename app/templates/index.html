@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timestamp and Hostname</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        .info {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>System Information</h1>
+        <div class="info">
+            <p><strong>Timestamp (UTC):</strong> {{ timestamp }}</p>
+            <p><strong>Container Hostname:</strong> {{ container_hostname }}</p>
+            <p><strong>Host Machine Hostname:</strong> {{ host_machine_hostname }}</p>
+        </div>
+    </div>
+</body>
+</html>
