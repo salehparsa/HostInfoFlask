@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: host-info-flask-deployment
+spec:
+  replicas: 3 # Number of replicas
+  selector:
+    matchLabels:
+      app: host-info-flask
+  template:
+    metadata:
+      labels:
+        app: host-info-flask
+    spec:
+      containers:
+      - name: fhost-info-flask
+        image: ghcr.io/salehparsa/host-info-flask:v.b75ab62
+        ports:
+        - containerPort: 5000
