@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: fhost-info-flask
-        image: ghcr.io/salehparsa/host-info-flask:v.b75ab62
+        image: ghcr.io/salehparsa/host-info-flask:v.0803768
         ports:
         - containerPort: 5000
         resources:
