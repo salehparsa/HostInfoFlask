@@ -1,10 +1,9 @@
 from flask import Flask, jsonify, render_template
-from prometheus_flask_exporter import PrometheusMetrics
 from datetime import datetime
 import socket
+import json
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
@@ -17,19 +16,15 @@ def index():
                            timestamp=timestamp,
                            container_hostname=container_hostname)
 
-# health check endpoint
+# healthcheck endpoint
 @app.route('/health')
 def health_check():
     return json.dumps({
         'status': 'UP',
-        'timestamp': datetime.datetime.now().isoformat(),
+        'timestamp': datetime.utcnow().isoformat()
     }), 200, {'Content-Type': 'application/json'}
 
-# Prometheus metrics will be exposed at /metrics by default
-@app.route('/metrics')
-def metrics_endpoint():
-    return metrics.generate_latest()
-
+# API endpoint
 @app.route('/api')
 def api():
     # Get current timestamp and hostnames
