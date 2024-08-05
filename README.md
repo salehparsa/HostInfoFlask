@@ -83,9 +83,17 @@ kubectl -n host-info-flask-namespace apply -f ingress.yaml
 
 Once deployed, you can access the application via your web browser:
 
-Local Setup with Ingress: Navigate to `http://localhost` in your browser. Or `curl http://localhost/api` from your terminal if you want to get the `json` result.
+Local Setup with Ingress: Navigate to `http://localhost/app` in your browser. Or `curl http://localhost/app/api` from your terminal if you want to get the `json` result. This application has a `health` endpoint that returns `200` if it's up and running and you can access it via `http://localhost/app/health`
 
 If you encounter any issues accessing the application, verify that the Ingress controller is routing traffic correctly and that your resources are properly configured.
+
+### Access the Grafana
+
+This project contains the deployment for Grafana as well. You are able to access it via `http://localhost/`
+
+### Connect Prometheus to Grafana
+
+In order to create a Datasource in Grafana for connecting to Prometheus you just need to use `http://prometheus:9090` as Prometheus server URL.
 
 ### Troubleshooting
 
@@ -95,14 +103,35 @@ If you run into issues, consider the following troubleshooting steps:
 ```sh
 kubectl get pods
 ```
+
+For getting application pods:
+
+```sh
+kubectl -n host-info-flask-namespace get pods
+```
+
 * Check Service Status: Ensure the service is correctly exposed:
 ```sh
 kubectl get svc
 ```
+
+For getting application Service:
+
+```sh
+kubectl -n host-info-flask-namespace get svc
+```
 * Check Ingress Status: Confirm that the Ingress is properly routing traffic:
+
+Grafana Ingress:
+
 ```sh
 kubectl get ingress
 ```
+Application Ingress:
+```sh
+kubectl -n host-info-flask-namespace get ingress
+```
+
 * View Logs: For detailed debugging, check the logs of the Ingress controller:
 ```sh
 kubectl logs kube-controller-manager-minikube  --namespace kube-system
