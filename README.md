@@ -34,6 +34,19 @@ project-root/
 ├── README.md
 ```
 
+### Build the container locally
+
+In case if you performed any changes and you want to test it locally, you are able to build the docker container with following command:
+
+```sh
+docker build -t flask-timestamp-hostname:v1-dev .
+```
+And then run the container via:
+
+```sh
+docker run -d -p 5000:5000 flask-timestamp-hostname:v1-dev
+```
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
