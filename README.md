@@ -113,6 +113,8 @@ clean-all   #Delete All
 
 To deploy the application, grafana or prometheus, apply the Kubernetes manifests using kubectl. You just need to navigate to the desired directory and run following:
 
+For Grafana and Prometheus you can run following:
+
 ```sh
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
@@ -137,17 +139,21 @@ If you encounter any issues accessing the application, verify that the Ingress c
 
 ### Access the Grafana
 
-This project contains the deployment for Grafana as well. You are able to access it via `http://localhost/`
+This project contains the deployment for Grafana as well. You are able to access it via `http://localhost/` . You can login via `admin` user and change the password after initial login.
 
 ### Connect Prometheus to Grafana
 
-In order to create a Datasource in Grafana for connecting to Prometheus you just need to use `http://prometheus:9090` as Prometheus server URL.
+In order to create a Datasource in Grafana for connecting to Prometheus you just need to use `http://prometheus:9090` as Prometheus server URL. After creating the datasource, you are able to create a Grafan Dashboard based on the data of the prometheus. For instance, you can configure it to query the `scrape_duration_Seconds` to get the duration of the scrape for targets.
+
+I've configured a sample target in `configmap.yaml` of prometheus as `host-info-flask-service:5000` and configured `scrape_interval: 15s` as global.
 
 ### Troubleshooting
 
 If you run into issues, consider the following troubleshooting steps:
 
 * Check Pod Status: Verify that the application pods are running:
+
+For `pods` in `Default` namespace:
 ```sh
 kubectl get pods
 ```
@@ -159,6 +165,9 @@ kubectl -n host-info-flask-namespace get pods
 ```
 
 * Check Service Status: Ensure the service is correctly exposed:
+
+For `svc` in `Default` namespace:
+
 ```sh
 kubectl get svc
 ```
