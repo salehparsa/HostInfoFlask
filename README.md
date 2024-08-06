@@ -8,6 +8,9 @@ This repository contains a Flask application that returns the current timestamp 
 
 ```
 project-root/
+├── .github/
+│   ├── workflows/
+│   │   ├── build.yml
 ├── app/
 │   ├── templates/
 │   │   ├── index.html
