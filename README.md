@@ -34,7 +34,7 @@ project-root/
 ├── README.md
 ```
 
-### Build the container locally
+### Build and Run the Container Locally
 
 In case if you performed any changes and you want to test it locally, you are able to build the docker container with following command:
 
