@@ -18,7 +18,7 @@ APP_INGRESS_YAML = $(APP_DIR)/ingress.yaml
 
 # Targets
 
-.PHONY: all deploy-prometheus deploy-grafana deploy-app deploy-all clean-prometheus clean-grafana clean-app clean-all
+.PHONY: all deploy-prometheus deploy-grafana setup-app-namespace deploy-app deploy-all clean-prometheus clean-grafana clean-app clean-app-namespace clean-all
 
 # Deploy all components
 all: deploy-all
@@ -37,6 +37,11 @@ deploy-grafana:
 	$(KUBECTL) apply -f $(GRAFANA_SERVICE_YAML)
 	$(KUBECTL) apply -f $(GRAFANA_INGRESS_YAML)
 
+# Create namespace for application
+setup-app-namespace:
+	@echo "Creating namespace for application..."
+	$(KUBECTL) create namespace $(APP_NAMESPACE)
+
 # Deploy application components
 deploy-app:
 	@echo "Deploying application components..."
@@ -45,7 +50,7 @@ deploy-app:
 	$(KUBECTL) -n $(APP_NAMESPACE) apply -f $(APP_INGRESS_YAML)
 
 # Deploy all components
-deploy-all: deploy-prometheus deploy-grafana deploy-app
+deploy-all: deploy-prometheus deploy-grafana setup-app-namespace deploy-app
 
 # Clean Prometheus components
 clean-prometheus:
@@ -68,5 +73,9 @@ clean-app:
 	$(KUBECTL) -n $(APP_NAMESPACE)  delete -f $(APP_SERVICE_YAML) || true
 	$(KUBECTL) -n $(APP_NAMESPACE) delete -f $(APP_INGRESS_YAML) || true
 
+clean-app-namespace:
+	@echo "Cleaning up application namespace..."
+	$(KUBECTL) delete namespace $(APP_NAMESPACE) || true
+
 # Clean all components
-clean-all: clean-prometheus clean-grafana clean-app
+clean-all: clean-prometheus clean-grafana clean-app clean-app-namespace

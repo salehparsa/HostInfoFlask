@@ -4,6 +4,36 @@
 
 This repository contains a Flask application that returns the current timestamp and hostnames. It shows the result in a webpage and also it returns the `json` value via `/api`. It is configured to run in a Kubernetes cluster and is exposed via Ingress. This README provides instructions for setting up and deploying the application using Minikube.
 
+### Files and Directories
+
+```
+project-root/
+├── app/
+│   ├── templates/
+│   │   ├── index.html
+│   ├── app.py
+├── requirements.txt
+├── k8s/
+│   ├── app/
+│   │   ├── deployment.yaml
+│   │   ├── ingress.yaml
+│   │   ├── namespace.yaml
+│   │   ├── service.yaml
+│   ├── grafana/
+│   │   ├── deployment.yaml
+│   │   ├── ingress.yaml
+│   │   ├── service.yaml
+│   ├── prometheus/
+│   │   ├── deployment.yaml
+│   │   ├── configmap.yaml
+│   │   ├── service.yaml
+├── .dockerignore
+├── .gitignore
+├── Makefile
+├── Dockerfile
+├── README.md
+```
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -54,10 +84,12 @@ This repository contains a `Makefile` with some predefined target that helps you
 deploy-all      # Deploy all
 deploy-prometheus   # Only Deploy Prometheus
 deploy-grafana  #Only Deploy Grafana
+setup-app-namespace #Setup Application Namespace
 deploy-app  #Only Deploy Application
 clean-prometheus    #Delete Prometheus
 clean-grafana   #Delete Grafana
 clean-app   #Delete Application
+clean-app-namespace # Delete Application Namespace
 clean-all   #Delete All
 ```
 
@@ -137,7 +169,11 @@ kubectl -n host-info-flask-namespace get ingress
 kubectl logs kube-controller-manager-minikube  --namespace kube-system
 ```
 
-### Documentations
+## Note
+
+This project is using [Github Action](https://docs.github.com/en/actions) to build the `Dockerfile` and push it into [Github Packages](https://github.com/features/packages). Github Action workflows is restricted to get trigger only when you have changes in either `app` directory or `Dockerfile`. However, if you like to use different version of application in `deployement.yaml` file you can choose your image from [This Package] (https://github.com/users/salehparsa/packages/container/package/host-info-flask).
+
+## Documentations
 
 - [Minikube Documentation](https://minikube.sigs.k8s.io/docs/handbook/)
 - [Kubernetes Ingress Documentation](https://kubernetes.io/docs/concepts/services-networking/ingress/)
